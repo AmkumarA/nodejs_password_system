@@ -44,4 +44,21 @@ const loginUser = async (req, res) => {
         throw new Error("Error in user loginUser", error)
     }
 }
-export { userRegistraion, loginUser }
+const updateUserPassword = async (req, res) => {
+    try {
+        const { id, password, userName } = req.body
+        let isExists = await UserModel.findByPk(id)
+        if (!isExists) return res.json({ statusCode: 200, message: "User not found!!" });
+        let updatePassword = await UserModel.update({
+            password,
+            user_name: userName
+        }, { where: { id }, individualHooks: true })
+        if (!updatePassword) return res.json({ statusCode: 200, message: "Not update successfully!!" })
+        return res.json({ statusCode: 200, message: "User password update successfully!!" })
+    } catch (error) {
+        console.log("\n\n\n\n\n", error);
+
+        throw new Error("Error in user updateUserPassword", error)
+    }
+}
+export { userRegistraion, loginUser, updateUserPassword }

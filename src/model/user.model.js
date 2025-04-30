@@ -43,8 +43,6 @@ const UserModel = sequilize.define('users', {
 }
 )
 UserModel.prototype.validPassword = async function (password) {
-    console.log("kjhfhjhgfgh");
-
     return await bcrypt.compareSync(password, this.password)
 }
 export default UserModel
